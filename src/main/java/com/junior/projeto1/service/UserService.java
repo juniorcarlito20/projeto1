@@ -4,6 +4,8 @@ import com.junior.projeto1.entity.User;
 import com.junior.projeto1.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -34,7 +36,6 @@ public class UserService {
             throw new IllegalArgumentException("E-mail inválido");
         }
 
-
         // Adicione outras regras de negócio aqui...
     }
 
@@ -43,4 +44,19 @@ public class UserService {
         validarUsuario(user); // Valida antes de salvar
         return userRepository.save(user); // Salva no banco e retorna o usuário salvo
     }
+
+    public List<User> listarUsuarios() {
+        return userRepository.findAll();
+    }
+
+    // Metodo para validar e salvar varios usuários de uma so vez
+    public List<User> salvarLista(List<User> users) {
+        for (User user : users) {
+            validarUsuario(user);  // Valida cada um
+        }
+        return userRepository.saveAll(users);  // Salva todos os usuários e retorna a lista salva
+    }
 }
+
+
+
