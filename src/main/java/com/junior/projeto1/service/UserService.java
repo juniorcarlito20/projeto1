@@ -36,10 +36,10 @@ public class UserService {
             throw new IllegalArgumentException("E-mail inválido");
         }
 
-        // Adicione outras regras de negócio aqui...
+
     }
 
-    // metodo para salvar usuário
+    // Metodo para validar e salvar um usuário
     public User salvarUsuario(User user) {
         validarUsuario(user); // Valida antes de salvar
         return userRepository.save(user); // Salva no banco e retorna o usuário salvo
@@ -55,6 +55,16 @@ public class UserService {
             validarUsuario(user);  // Valida cada um
         }
         return userRepository.saveAll(users);  // Salva todos os usuários e retorna a lista salva
+    }
+
+    //metodo para buscar todos os usuários
+    public List<User> listarTodos() {
+    return userRepository.findAll();
+    }
+    //metodo para buscar usuário por ID
+    public User buscarPorId(Long id) {
+        return userRepository.findById(id).orElse(null) ;
+        // findById busca no banco de dados e orElse(null) retorna usuario encontrado ou inexistente.
     }
 }
 
