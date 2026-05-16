@@ -1,5 +1,7 @@
 package com.junior.projeto1.service;
 
+import com.junior.projeto1.dto.UserRequestDTO;
+import com.junior.projeto1.dto.UserResponseDTO;
 import com.junior.projeto1.entity.User;
 import com.junior.projeto1.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -40,11 +42,14 @@ public class UserService {
     }
 
     // Metodo para validar e salvar um usuário
-    public User salvarUsuario(User user) {
-        validarUsuario(user); // Valida antes de salvar
-        return userRepository.save(user); // Salva no banco e retorna o usuário salvo
+    public UserResponseDTO salvarUsuario(UserRequestDTO usuarioDTO) {
+        User usuario = new User();
+        usuario.setName(usuarioDTO.getName());
+        usuario.setEmail(usuarioDTO.getEmail());
+        User usuarioSalvo= userRepository.save(usuario);
+        return new UserResponseDTO(usuarioSalvo.getId(), usuarioSalvo.getName(), usuarioSalvo.getEmail());
     }
-
+    //metodo para buscar todos os usuários
     public List<User> listarUsuarios() {
         return userRepository.findAll();
     }
@@ -57,10 +62,7 @@ public class UserService {
         return userRepository.saveAll(users);  // Salva todos os usuários e retorna a lista salva
     }
 
-    //metodo para buscar todos os usuários
-    public List<User> listarTodos() {
-    return userRepository.findAll();
-    }
+
     //metodo para buscar usuário por ID
     public User buscarPorId(Long id) {
         return userRepository.findById(id).orElse(null) ;
