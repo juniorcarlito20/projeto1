@@ -32,4 +32,13 @@ public class UserController {
     public User buscarPorId(@PathVariable Long id){
         return userService.buscarPorId(id);
     }
+
+    @PutMapping("/{id}")
+    public User atualizarUsuario(@PathVariable Long id, @RequestBody User usuarioAtualizado) {
+        return userService.atualizarUsuario(id, usuarioAtualizado);
+    }
+    @DeleteMapping("/{id}")
+    public void deletarUsuario(@PathVariable Long id) {
+        userService.deletarUsuario(id);
+    }
 }

@@ -66,6 +66,19 @@ public class UserService {
         return userRepository.findById(id).orElse(null) ;
         // findById busca no banco de dados e orElse(null) retorna usuario encontrado ou inexistente.
     }
+    // metodo para atualizar usuario
+    public User atualizarUsuario (long id , User usuarioAtualizado){
+        User user = userRepository.findById(id).orElseThrow(()-> new RuntimeException("Usuário não encontrado."));
+        user.setName(usuarioAtualizado.getName());
+        user.setEmail(usuarioAtualizado.getEmail());
+        return userRepository.save(user);
+    }
+
+    // metodo para deletar usuario
+    public void deletarUsuario(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado."));
+        userRepository.delete(user);
+    }
 }
 
 
